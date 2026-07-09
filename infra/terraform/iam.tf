@@ -65,3 +65,15 @@ resource "google_artifact_registry_repository_iam_member" "cloudrun_runtime_arti
   role       = "roles/artifactregistry.writer"
   member     = "serviceAccount:${google_service_account.cloud_run_runtime.email}"
 }
+
+resource "google_project_iam_member" "runtime_run_admin_for_build" {
+  project = var.project_id
+  role    = "roles/run.admin"
+  member  = "serviceAccount:${google_service_account.cloud_run_runtime.email}"
+}
+
+resource "google_project_iam_member" "runtime_sa_user_for_build" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountUser"
+  member  = "serviceAccount:${google_service_account.cloud_run_runtime.email}"
+}
