@@ -36,6 +36,16 @@ docker compose up --build
 
 ---
 
+## Deploying infracructure to GCP
+
+```bash
+cd infra/terraform
+
+terraform init
+terraform plan
+terraform apply -auto-approve
+```
+
 ## Sources
 
 - https://docs.cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-fastapi-service

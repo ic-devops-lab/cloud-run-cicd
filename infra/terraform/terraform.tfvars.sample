@@ -1,0 +1,4 @@
+project_id   = "my-project_id"
+project_name = "my-project-name"
+# project_folder = "my-project-folder"
+service_name = "my-cloud-run-service-name"
