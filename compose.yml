@@ -1,0 +1,16 @@
+name: cloud-run-cicd
+
+services:
+  api-app:
+    build:
+      context: .
+      dockerfile: src/Dockerfile
+    image: cloud-run-cicd-api:local
+    container_name: cloud-run-cicd-api
+    environment:
+      APP_NAME: ${APP_NAME:-cloud-run-cicd-api}
+      APP_VERSION: ${APP_VERSION:-local}
+      APP_ENV: ${APP_ENV:-local}
+      APP_PORT: ${APP_PORT:-8000}
+    ports:
+      - "${APP_PORT:-8000}:${APP_PORT:-8000}"

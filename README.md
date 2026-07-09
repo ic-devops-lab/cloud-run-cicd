@@ -29,6 +29,11 @@ export APP_MODULE="app.main:app"
 uvicorn $APP_MODULE --host $HOST --port $PORT --reload
 ```
 
+- Containerized version
+```bash
+docker compose up --build
+```
+
 ---
 
 ## Sources

@@ -11,7 +11,7 @@ app: FastAPI = FastAPI(title=settings.app_name, version=settings.app_version)
 async def root() -> dict[str, str]:
     """App root endpoint."""
     return {
-        "message": f"Welcome to {settings.app_name} running on {settings.env} environment!"
+        "message": f"Welcome to {settings.app_name} running on {settings.app_env} environment!"
     }
 
 
