@@ -5,7 +5,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
     APP_NAME=cloud-run-cicd \
     APP_VERSION=local \
-    APP_ENV=local
+    APP_ENV=local \
+    PORT=${PORT:-8080}
 
 WORKDIR /app
 
@@ -16,5 +17,5 @@ RUN pip install --upgrade pip && pip install .
 # Application layer
 COPY src/app ./app
 
-EXPOSE ${APP_PORT:-8000}
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${APP_PORT:-8000}"]
+EXPOSE ${PORT:-8080}
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}"]
