@@ -36,15 +36,57 @@ docker compose up --build
 
 ---
 
-## Deploying infracructure to GCP
+## Infrastructure
 
+### Overview
+
+Terraform owns:
+  - project
+  - required APIs
+  - Artifact Registry
+  - Cloud Run service
+  - Cloud Run runtime service account
+  - IAM
+  - later: Cloud SQL, VPC, Secret Manager, LB
+
+Cloud Build owns:
+  - build Docker image
+  - push image
+  - update Cloud Run service image
+
+---
+
+### Deploying the progect to GCP
+
+1. Infrastructure Deployment
 ```bash
+export PROJECT_ID="project-id"
+
 cd infra/terraform
 
 terraform init
-terraform plan
-terraform apply -auto-approve
+terraform plan -var="project_id=${PROJECT_ID}"
+terraform apply -var="project_id=${PROJECT_ID}" -auto-approve
 ```
+
+2. Create the Cloud Build trigger manually in the console for speed:
+
+Cloud Build → Triggers → Create trigger
+- Source: GitHub
+- Repo: ic-devops-lab/cloud-run-cicd
+- Event: Push to branch
+- Branch: ^main$
+- Config file: cloudbuild.yaml
+- Service account: select one created by terraform
+
+3. Create and push commit in the project
+```bash
+git add .
+git commit -m "Add Cloud Build deployment"
+git push
+```
+
+---
 
 ## Sources
 

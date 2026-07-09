@@ -28,3 +28,14 @@ variable "service_name" {
   # add to terraform.tfvars file, for ex.: service_name = "my-service-name-12345678"
   default = "my-cloud-run-service"
 }
+
+variable "artifact_repo" {
+  type    = string
+  default = "cloud-run-demo"
+}
+
+variable "initial_image" {
+  type        = string
+  default     = "us-docker.pkg.dev/cloudrun/container/hello"
+  description = "The initial image to create the Cloud Run service with. This image will be replaced by the image built by Cloud Build."
+}
