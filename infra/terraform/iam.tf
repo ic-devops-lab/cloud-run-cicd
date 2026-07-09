@@ -40,3 +40,20 @@ resource "google_artifact_registry_repository_iam_member" "cloudrun_artifact_rea
   role       = "roles/artifactregistry.reader"
   member     = "serviceAccount:${google_service_account.cloud_run_runtime.email}"
 }
+
+# better to replace later with cloud-build-deployer and use that on in the cloud build trigger
+# SA will need to be granted the following roles:
+# roles/logging.logWriter
+# roles/run.admin
+# roles/iam.serviceAccountUser
+# roles/artifactregistry.writer
+#
+# That will do:
+# Cloud Build SA = build/deploy permissions
+# Cloud Run runtime SA = app runtime permissions
+
+resource "google_project_iam_member" "cloudbuild_logs_writer" {
+  project = var.project_id
+  role    = "roles/logging.logWriter"
+  member  = "serviceAccount:${google_service_account.cloud_run_runtime.email}"
+}
