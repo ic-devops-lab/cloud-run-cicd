@@ -9,11 +9,16 @@ description = "A Python project for demonstrating cloud run CI/CD"
 requires-python = ">=3.13"
 readme = "README.md"
 dependencies = [
-  "fastapi[standard]",
-  "pydantic-settings",
-  "uvicorn[standard]",
+  "asyncpg>=0.31.0,<0.32",
+  "fastapi[standard]>=0.139.0,<0.140",
+  "pydantic-settings>=2.14.2,<2.15",
+  "sqlmodel>=0.0.39,<0.0.40",
+  "uvicorn[standard]>=0.51.0,<0.52",
 ]
 
 [project.optional-dependencies]
 dev = [
 ]
+
+[project.scripts]
+api-start = "app.server:start"

@@ -19,19 +19,32 @@ pip install -e
 
 ---
 
-## Running the project locally
+## Using the project locally
+
+- create dotenv file
+
+In the project's root folder, uncomment and update variables if needed.
+All commented settings are optional.
+
+```bash
+cp .env.sample .env
+```
 
 - From the code
+> Requires Postgres service app
 ```bash
-export HOST="0.0.0.0"
-export PORT="8000"
-export APP_MODULE="app.main:app"
+source .env
 uvicorn $APP_MODULE --host $HOST --port $PORT --reload
 ```
 
 - Containerized version
 ```bash
+docker compose up
 docker compose up --build
+docker compose up postgres    # run only postgres service on container
+
+docker compose down
+docker compose down -v    # destoy volumes
 ```
 
 ---
@@ -53,6 +66,27 @@ Cloud Build owns:
   - build Docker image
   - push image
   - update Cloud Run service image
+
+#### What needs to be improved in IAM
+
+Currently we create a single service account that does 2 different things:
+1. builds and deploys the app in Cloud Build.
+2. Starts Cloud Run service
+
+Ideally it would be better to separate responsibilities:
+```
+Cloud Build SA
+    ↓
+Build
+Push image
+Deploy
+
+Cloud Run Runtime SA
+    ↓
+Read Secret Manager
+Connect to Cloud SQL
+Call APIs
+```
 
 ---
 
